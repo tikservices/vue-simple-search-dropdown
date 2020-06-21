@@ -90,10 +90,10 @@
     },
     methods: {
       focus() {
-        this.$ref.input.focus()
+        this.$refs.input.focus()
       },
       blur() {
-        this.$ref.input.blur()
+        this.$refs.input.blur()
       },
       selectOption(option) {
         this.selected = option;
