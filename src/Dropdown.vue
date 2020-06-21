@@ -3,13 +3,16 @@
 
     <!-- Dropdown Input -->
     <input class="dropdown-input"
+      ref="input"
       :name="name"
       @focus="showOptions()"
       @blur="exit()"
       @keyup="keyMonitor"
       v-model="searchFilter"
       :disabled="disabled"
-      :placeholder="placeholder" />
+      :placeholder="placeholder"
+      autocomplete="off"
+      />
 
     <!-- Dropdown Menu -->
     <div class="dropdown-content"
@@ -19,7 +22,9 @@
         @mousedown="selectOption(option)"
         v-for="(option, index) in filteredOptions"
         :key="index">
-          {{ option.name || option.id || '-' }}
+          <slot name="option" v-bind:option="option">
+            {{ option.name || option.id || '-' }}
+          </slot>
       </div>
     </div>
   </div>
@@ -84,6 +89,12 @@
       }
     },
     methods: {
+      focus() {
+        this.$ref.input.focus()
+      },
+      blur() {
+        this.$ref.input.blur()
+      },
       selectOption(option) {
         this.selected = option;
         this.optionsShown = false;
